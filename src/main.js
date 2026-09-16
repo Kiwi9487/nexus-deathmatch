@@ -9,8 +9,10 @@ import { Bots } from './bots.js'
 import { updateEffects, updateFountain } from './effects.js'
 import { ui } from './ui.js'
 import { game } from './game.js'
+import { applyLanguage } from './i18n.js'
 
 loadSettings()
+applyLanguage()
 
 const canvas = document.getElementById('c3d')
 initRenderer(canvas)
