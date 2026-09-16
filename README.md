@@ -4,6 +4,10 @@ Un shooter táctico 3D para navegador, inspirado en la estética de los FPS tác
 
 ![Captura de juego](screenshots/gameplay.png)
 
+> 🎮 **Jugar en línea:** https://kiwi9487.github.io/nexus-deathmatch/
+
+**Autor:** Wenzhe Qiu · IES Miraflores de los Ángeles · 26-27
+
 ## Qué incluye
 
 - **Modo deathmatch** contra 3–7 bots (configurable), con marcador, racha y MVP.

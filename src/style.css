@@ -106,6 +106,7 @@ html, body {
 #menu .help b { color: var(--accent); font-weight: 700; margin-right: 8px; letter-spacing: 1px; }
 #menu .help span { color: var(--dim); font-weight: 400; }
 #menu .foot { margin-top: 14px; font-size: 11px; color: rgba(139,149,168,.55); letter-spacing: 1px; }
+#menu .credit { margin-top: 6px; font-size: 12px; color: rgba(232,236,244,.7); letter-spacing: 1px; }
 
 /* ---------- 设置 ---------- */
 #settings {
@@ -264,3 +265,5 @@ html, body {
 #fps { position: absolute; right: 10px; top: 6px; font-family: var(--mono); font-size: 11px; color: rgba(139,149,168,.7); z-index: 7; display: none; }
 
 #hint { position: absolute; bottom: 90px; left: 50%; transform: translateX(-50%); font-size: 12px; color: rgba(232,236,244,.5); letter-spacing: 2px; z-index: 7; display: none; text-shadow: 0 1px 6px rgba(0,0,0,.8); }
+
+#credit { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 10px; letter-spacing: 1px; color: rgba(232,236,244,.38); z-index: 7; text-shadow: 0 1px 4px rgba(0,0,0,.7); }

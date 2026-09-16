@@ -56,6 +56,7 @@ export const ui = {
           <div><b>R / TAB / M</b><span>${t('reloadTab')}</span></div>
         </div>
         <div class="foot">${t('foot')}</div>
+        <div class="credit">${t('credit')}</div>
       </div>
 
       <!-- 设置 -->
@@ -114,6 +115,7 @@ export const ui = {
         </div>
         <div id="train-stats" style="display:none"></div>
         <div id="hint">${t('hint')}</div>
+        <div id="credit">${t('credit')}</div>
       </div>
       <div id="fps">60</div>
     `
