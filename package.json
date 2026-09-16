@@ -1,0 +1,22 @@
+{
+  "name": "nexus-deathmatch",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node test/gameplay.mjs && node test/features.mjs && node test/training.mjs && node test/smoke.mjs",
+    "test:gameplay": "node test/gameplay.mjs"
+  },
+  "dependencies": {
+    "three": "^0.169.0"
+  },
+  "devDependencies": {
+    "vite": "^5.4.8"
+  },
+  "allowScripts": {
+    "esbuild@0.21.5": true
+  }
+}
