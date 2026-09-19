@@ -40,7 +40,15 @@ const enterFullscreen = () => {
     const el = document.documentElement
     if (el.requestFullscreen) {
       const p = el.requestFullscreen()
-      if (p && p.catch) p.catch(() => {})
+      if (p && p.then) {
+        p.then(() => {
+          try {
+            if (screen.orientation && screen.orientation.lock) {
+              screen.orientation.lock('landscape').catch(() => {})
+            }
+          } catch {}
+        }).catch(() => {})
+      }
     }
   } catch {}
 }

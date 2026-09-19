@@ -106,6 +106,9 @@ const DICT = {
     ctlScore: 'TABLA',
     ctlMap: 'MAPA',
     ctlPause: 'PAUSA',
+    setTouchSens: 'Sensibilidad táctil',
+    rotateHint: 'Gira el teléfono en horizontal para jugar mejor',
+    iosHint: 'Pantalla completa: Compartir → Añadir a pantalla de inicio',
   },
   en: {
     title: 'NEXUS · Deathmatch Training',
@@ -205,6 +208,9 @@ const DICT = {
     ctlScore: 'SCORE',
     ctlMap: 'MAP',
     ctlPause: 'PAUSE',
+    setTouchSens: 'Touch sensitivity',
+    rotateHint: 'Rotate your phone to landscape for the best experience',
+    iosHint: 'Fullscreen: Share → Add to Home Screen',
   },
   zh: {
     title: 'NEXUS · 死斗训练场',
@@ -304,6 +310,9 @@ const DICT = {
     ctlScore: '计分',
     ctlMap: '地图',
     ctlPause: '暂停',
+    setTouchSens: '触屏灵敏度',
+    rotateHint: '建议横屏游玩',
+    iosHint: '全屏：分享 → 添加到主屏幕',
   },
 }
 

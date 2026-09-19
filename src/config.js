@@ -162,6 +162,7 @@ export const CFG = {
 
 export const settings = {
   lang: 'es',
+  touchSens: 1.0,
   sens: 1.0,
   fov: 103,
   volume: 0.8,
@@ -185,6 +186,7 @@ export function loadSettings() {
   } catch (e) { /* ignore */ }
   // 兜底：旧存档缺少新增字段时恢复默认值
   if (!['es', 'en', 'zh'].includes(settings.lang)) settings.lang = 'es'
+  if (typeof settings.touchSens !== 'number') settings.touchSens = 1.0
   if (typeof settings.volSfx !== 'number') settings.volSfx = 1.0
   if (typeof settings.volUI !== 'number') settings.volUI = 0.85
   if (typeof settings.volMusic !== 'number') settings.volMusic = 0.5

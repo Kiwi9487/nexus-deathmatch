@@ -44,6 +44,8 @@ export const ui = {
         <div class="langs" id="langs">
           ${LANGUAGES.map((l) => `<button class="lang ${settings.lang === l.code ? 'on' : ''}" data-lang="${l.code}">${l.label}</button>`).join('')}
         </div>
+        <div class="mobile-hint rotate">${t('rotateHint')}</div>
+        <div class="mobile-hint ios">${t('iosHint')}</div>
         <button class="btn primary" id="btn-start">${t('start')}</button>
         <button class="btn" id="btn-training">${t('training')}</button>
         <button class="btn" id="btn-settings">${t('settings')}</button>
@@ -198,6 +200,7 @@ export const ui = {
     panel.innerHTML = `
       <h2>${t('settings')}</h2>
       ${range(t('setSens'), 'sens', 0.1, 4, 0.05, (v) => v.toFixed(2))}
+      ${document.body.classList.contains('touch') ? range(t('setTouchSens'), 'touchSens', 0.3, 3, 0.05, (v) => v.toFixed(2)) : ''}
       ${range(t('setFov'), 'fov', 90, 120, 1, (v) => v + '°')}
       ${range(t('setMaster'), 'volume', 0, 1, 0.05, (v) => Math.round(v * 100) + '%')}
       ${range(t('setSfx'), 'volSfx', 0, 1, 0.05, (v) => Math.round(v * 100) + '%')}
@@ -220,7 +223,7 @@ export const ui = {
         const v = parseFloat(el.value)
         settings[el.dataset.key] = v
         panel.querySelector(`[data-val="${el.dataset.key}"]`).textContent =
-          el.dataset.key === 'sens' ? v.toFixed(2) : el.dataset.key === 'fov' ? v + '°' : Math.round(v * 100) + '%'
+          (el.dataset.key === 'sens' || el.dataset.key === 'touchSens') ? v.toFixed(2) : el.dataset.key === 'fov' ? v + '°' : Math.round(v * 100) + '%'
         saveSettings()
         this.onSettingsChange()
       })

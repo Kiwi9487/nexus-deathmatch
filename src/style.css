@@ -305,22 +305,30 @@ body.touch #touch-ui.active { display: block; }
   right: calc(10px + env(safe-area-inset-right, 0px));
   bottom: calc(12px + env(safe-area-inset-bottom, 0px));
   display: grid;
-  grid-template-columns: 58px 66px 88px;
-  grid-template-rows: 56px 56px 56px;
-  gap: 8px;
+  grid-template-columns: 68px 76px 96px;
+  grid-template-rows: 60px 60px 60px 60px;
+  gap: 10px;
   grid-template-areas:
+    "switch . ."
     "reload jump ."
-    "switch aim fire"
-    ". crouch fire";
+    "crouch aim fire"
+    ". . fire";
   pointer-events: none;
 }
-#action-cluster .tbtn { position: static; width: 100%; height: 100%; border-radius: 16px; }
-#action-cluster [data-btn=fire] { grid-area: fire; border-radius: 18px; font-size: 14px; }
+#action-cluster .tbtn {
+  position: static; width: 100%; height: 100%; border-radius: 16px;
+  transition: transform .05s ease, background .05s ease;
+}
+#action-cluster .tbtn:active { transform: scale(0.94); background: rgba(126,162,255,.30); }
+#action-cluster [data-btn=fire] {
+  grid-area: fire; border-radius: 20px; font-size: 14px;
+  background: rgba(126,162,255,.24); border-color: rgba(126,162,255,.5);
+}
 #action-cluster [data-btn=aim] { grid-area: aim; }
 #action-cluster [data-btn=jump] { grid-area: jump; }
 #action-cluster [data-btn=crouch] { grid-area: crouch; }
-#action-cluster [data-btn=reload] { grid-area: reload; font-size: 10px; }
-#action-cluster [data-btn=switch] { grid-area: switch; font-size: 10px; }
+#action-cluster [data-btn=reload] { grid-area: reload; font-size: 11px; }
+#action-cluster [data-btn=switch] { grid-area: switch; font-size: 11px; }
 
 .tbtn[data-btn=pause] {
   right: calc(12px + env(safe-area-inset-right, 0px));
@@ -340,3 +348,12 @@ body.touch #end .stat .v { font-size: 24px; }
 body.touch #scoreboard .panel { min-width: 0 !important; width: 94vw; overflow-x: auto; }
 body.touch #feed { top: 122px; left: 14px; right: auto; align-items: flex-start; }
 body.touch #fps { display: none !important; }
+
+.mobile-hint { display: none; margin-top: 8px; font-size: 12px; letter-spacing: 1px; text-align: center; }
+.mobile-hint.rotate { color: var(--gold); }
+.mobile-hint.ios { color: var(--dim); }
+body.touch #menu .rotate { display: block; }
+body.ios #menu .ios { display: block; }
+@media (orientation: landscape) {
+  body.touch #menu .rotate { display: none; }
+}

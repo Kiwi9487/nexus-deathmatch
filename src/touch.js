@@ -5,6 +5,7 @@
  */
 import { input } from './input.js'
 import { t } from './i18n.js'
+import { settings } from './config.js'
 
 const LOOK_SENS = 1.8   // 触摸视角灵敏度（叠加设置里的 sens）
 const JOY_R = 56        // 摇杆最大拖动半径（CSS px）
@@ -15,6 +16,11 @@ function detectTouch() {
   const coarse = window.matchMedia('(pointer: coarse)').matches
   const fine = window.matchMedia('(pointer: fine)').matches
   return coarse || (!fine && (('ontouchstart' in window) || navigator.maxTouchPoints > 0))
+}
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
 }
 
 export const touch = {
@@ -32,6 +38,7 @@ export const touch = {
     this.game = game
     this.player = player
     document.body.classList.add('touch')
+    if (isIOS()) document.body.classList.add('ios')
     input.enableTouch()
     this.build()
     window.addEventListener('nexus-language-change', () => this.build())
@@ -176,7 +183,8 @@ export const touch = {
       const dy = e.clientY - ly
       lx = e.clientX
       ly = e.clientY
-      input.setLook(dx * LOOK_SENS, dy * LOOK_SENS)
+      const s = LOOK_SENS * (settings.touchSens || 1)
+      input.setLook(dx * s, dy * s)
     })
     const end = (e) => {
       if (e.pointerId === id) id = null
