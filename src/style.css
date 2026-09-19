@@ -291,27 +291,42 @@ body.touch #touch-ui.active { display: block; }
 .tbtn {
   position: absolute; pointer-events: auto; touch-action: none;
   display: flex; align-items: center; justify-content: center; text-align: center;
-  border-radius: 50%; border: 1px solid rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.22);
   background: rgba(8,11,16,.48); color: #e8ecf4;
   font-family: var(--sans); font-weight: 700; letter-spacing: .5px; line-height: 1.05;
-  padding: 0 5px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  padding: 0 6px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
   -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
 }
 .tbtn.on { border-color: var(--accent); background: rgba(126,162,255,.28); color: #fff; }
-.tbtn.tbig { width: 96px; height: 96px; font-size: 13px; }
-.tbtn.tmed { width: 68px; height: 68px; font-size: 11px; }
-.tbtn.tsmall { width: 56px; height: 56px; font-size: 10px; }
 
-.tbtn[data-btn=fire] { right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); }
-.tbtn[data-btn=aim] { right: 132px; bottom: calc(30px + env(safe-area-inset-bottom, 0px)); }
-.tbtn[data-btn=jump] { right: 16px; bottom: calc(134px + env(safe-area-inset-bottom, 0px)); }
-.tbtn[data-btn=crouch] { right: 102px; bottom: calc(146px + env(safe-area-inset-bottom, 0px)); }
-.tbtn[data-btn=reload] { right: 18px; top: calc(50% - 96px); }
-.tbtn[data-btn=switch] { right: 18px; top: calc(50% - 32px); }
-.tbtn[data-btn=walk] { right: 18px; top: calc(50% + 32px); }
-.tbtn[data-btn=score] { right: 14px; top: calc(74px + env(safe-area-inset-top, 0px)); }
-.tbtn[data-btn=map] { right: 14px; top: calc(136px + env(safe-area-inset-top, 0px)); }
-.tbtn[data-btn=pause] { right: 14px; top: calc(12px + env(safe-area-inset-top, 0px)); }
+/* 右侧动作区：网格布局，锚定右下角，横竖屏都不会互相叠盖 */
+#action-cluster {
+  position: absolute;
+  right: calc(10px + env(safe-area-inset-right, 0px));
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  display: grid;
+  grid-template-columns: 58px 66px 88px;
+  grid-template-rows: 56px 56px 56px;
+  gap: 8px;
+  grid-template-areas:
+    "reload jump ."
+    "switch aim fire"
+    ". crouch fire";
+  pointer-events: none;
+}
+#action-cluster .tbtn { position: static; width: 100%; height: 100%; border-radius: 16px; }
+#action-cluster [data-btn=fire] { grid-area: fire; border-radius: 18px; font-size: 14px; }
+#action-cluster [data-btn=aim] { grid-area: aim; }
+#action-cluster [data-btn=jump] { grid-area: jump; }
+#action-cluster [data-btn=crouch] { grid-area: crouch; }
+#action-cluster [data-btn=reload] { grid-area: reload; font-size: 10px; }
+#action-cluster [data-btn=switch] { grid-area: switch; font-size: 10px; }
+
+.tbtn[data-btn=pause] {
+  right: calc(12px + env(safe-area-inset-right, 0px));
+  top: calc(12px + env(safe-area-inset-top, 0px));
+  width: 54px; height: 54px; border-radius: 50%; font-size: 11px;
+}
 
 /* 移动端界面适配：更紧凑，避免溢出 */
 body.touch #menu .brand { font-size: 46px; letter-spacing: 8px; }
@@ -323,5 +338,5 @@ body.touch #end h1 { font-size: 30px; letter-spacing: 6px; }
 body.touch #end .stat-line { gap: 16px; flex-wrap: wrap; justify-content: center; }
 body.touch #end .stat .v { font-size: 24px; }
 body.touch #scoreboard .panel { min-width: 0 !important; width: 94vw; overflow-x: auto; }
-body.touch #feed { top: 56px; right: 14px; }
+body.touch #feed { top: 122px; left: 14px; right: auto; align-items: flex-start; }
 body.touch #fps { display: none !important; }

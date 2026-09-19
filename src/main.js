@@ -1,6 +1,6 @@
 /* ================= 入口与主循环 ================= */
 import { loadSettings, settings } from './config.js'
-import { initRenderer, scene, camera, renderer, updateWorld, render, applyQuality, updateShadow } from './render.js'
+import { initRenderer, scene, camera, renderer, updateWorld, render, applyQuality, updateShadow, resize } from './render.js'
 import { buildMap, world } from './world/map.js'
 import { input } from './input.js'
 import { initAudio, setVolume } from './audio.js'
@@ -34,8 +34,20 @@ ui.applySettings()
 game.init({ player, bots, ui })
 touch.init({ game, player })
 
+const enterFullscreen = () => {
+  if (!touch.enabled) return
+  try {
+    const el = document.documentElement
+    if (el.requestFullscreen) {
+      const p = el.requestFullscreen()
+      if (p && p.catch) p.catch(() => {})
+    }
+  } catch {}
+}
+
 const lockPointer = () => {
-  if (!touch.enabled && canvas.requestPointerLock) canvas.requestPointerLock()
+  if (touch.enabled) { enterFullscreen(); return }
+  if (canvas.requestPointerLock) canvas.requestPointerLock()
 }
 
 /* ---------- 按钮动作 ---------- */
@@ -106,6 +118,12 @@ canvas.addEventListener('click', () => {
 document.addEventListener('visibilitychange', () => {
   if (document.hidden && (game.state === 'play' || game.state === 'countdown' || game.state === 'train')) game.pause()
 })
+
+// 移动端地址栏收起 / 旋转屏幕时，重新适配画布与 HUD 尺寸
+if (window.visualViewport) {
+  window.visualViewport.addEventListener('resize', () => resize())
+}
+window.addEventListener('orientationchange', () => setTimeout(resize, 120))
 
 /* ---------- 主循环 ---------- */
 let last = performance.now()

@@ -45,16 +45,15 @@ export const touch = {
       <div id="move-zone"></div>
       <div id="look-zone"></div>
       <div id="joy-base"><div id="joy-knob"></div></div>
-      <button class="tbtn tbig" data-btn="fire">${t('ctlFire')}</button>
-      <button class="tbtn tmed" data-btn="aim">${t('ctlAim')}</button>
-      <button class="tbtn tmed" data-btn="jump">${t('ctlJump')}</button>
-      <button class="tbtn tsmall" data-btn="crouch">${t('ctlCrouch')}</button>
-      <button class="tbtn tsmall" data-btn="walk">${t('ctlWalk')}</button>
-      <button class="tbtn tsmall" data-btn="reload">${t('ctlReload')}</button>
-      <button class="tbtn tsmall" data-btn="switch">${t('ctlSwitch')}</button>
-      <button class="tbtn tsmall" data-btn="score">${t('ctlScore')}</button>
-      <button class="tbtn tsmall" data-btn="map">${t('ctlMap')}</button>
-      <button class="tbtn tsmall" data-btn="pause">${t('ctlPause')}</button>
+      <div id="action-cluster">
+        <button class="tbtn" data-btn="fire">${t('ctlFire')}</button>
+        <button class="tbtn" data-btn="aim">${t('ctlAim')}</button>
+        <button class="tbtn" data-btn="jump">${t('ctlJump')}</button>
+        <button class="tbtn" data-btn="crouch">${t('ctlCrouch')}</button>
+        <button class="tbtn" data-btn="reload">${t('ctlReload')}</button>
+        <button class="tbtn" data-btn="switch">${t('ctlSwitch')}</button>
+      </div>
+      <button class="tbtn" data-btn="pause">${t('ctlPause')}</button>
     `
     this._bindJoystick()
     this._bindLook()
@@ -87,12 +86,9 @@ export const touch = {
     input.mouse.left = false
     input.mouse.right = false
     this.crouchOn = false
-    this.walkOn = false
     if (this.root) {
       const c = this.root.querySelector('[data-btn=crouch]')
-      const w = this.root.querySelector('[data-btn=walk]')
       if (c) c.classList.remove('on')
-      if (w) w.classList.remove('on')
     }
     if (this._resetJoystick) this._resetJoystick()
   },
@@ -196,11 +192,8 @@ export const touch = {
     const aim = q('[data-btn=aim]')
     const jump = q('[data-btn=jump]')
     const crouch = q('[data-btn=crouch]')
-    const walk = q('[data-btn=walk]')
     const reload = q('[data-btn=reload]')
     const switcher = q('[data-btn=switch]')
-    const score = q('[data-btn=score]')
-    const map = q('[data-btn=map]')
     const pause = q('[data-btn=pause]')
 
     const hold = (el, down, up) => {
@@ -229,12 +222,9 @@ export const touch = {
       })
     }
     toggle(crouch, () => this.crouchOn, (v) => { this.crouchOn = v; input.setKey('ControlLeft', v) })
-    toggle(walk, () => this.walkOn, (v) => { this.walkOn = v; input.setKey('ShiftLeft', v) })
 
     if (reload) reload.addEventListener('pointerdown', (e) => { e.preventDefault(); input.pressKey('KeyR', 120) })
     if (switcher) switcher.addEventListener('pointerdown', (e) => { e.preventDefault(); input.edge('KeyQ') })
-    if (map) map.addEventListener('pointerdown', (e) => { e.preventDefault(); input.edge('KeyM') })
-    hold(score, () => input.setKey('Tab', true), () => input.setKey('Tab', false))
 
     if (pause) pause.addEventListener('pointerdown', (e) => {
       e.preventDefault()
