@@ -114,7 +114,17 @@ html, body {
   align-items: center; justify-content: center; z-index: 30;
   background: rgba(5, 8, 12, .6);
 }
-#settings .panel { width: 460px; padding: 30px 36px; display: flex; flex-direction: column; gap: 18px; }
+#settings .panel {
+  width: min(460px, 94vw);
+  max-height: min(86dvh, 760px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 26px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 #settings h2 { font-size: 18px; letter-spacing: 6px; color: var(--accent); font-weight: 700; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 16px; font-size: 13.5px; color: var(--dim); }
 .row .val { color: var(--text); font-family: var(--mono); min-width: 44px; text-align: right; }
@@ -129,7 +139,12 @@ html, body {
   border: 1px solid rgba(255,255,255,.12); border-radius: 4px;
 }
 .seg button.on { color: #fff; border-color: var(--accent); background: rgba(126,162,255,.15); }
-.settings-actions { display: flex; gap: 12px; justify-content: flex-end; }
+.settings-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  position: sticky; bottom: -8px;
+  background: rgba(13, 17, 23, .92);
+  padding-top: 8px; margin-top: 2px;
+}
 
 /* ---------- HUD ---------- */
 #hud { position: absolute; inset: 0; display: none; }
@@ -341,7 +356,13 @@ body.touch #menu .brand { font-size: 46px; letter-spacing: 8px; }
 body.touch #menu .sub { font-size: 12px; letter-spacing: 4px; margin-bottom: 22px; }
 body.touch .btn { min-width: min(320px, 82vw); padding: 13px 22px; }
 body.touch #menu .help { grid-template-columns: 1fr; max-width: 88vw; margin-top: 26px; font-size: 11px; }
-body.touch #settings .panel { width: min(460px, 92vw); padding: 24px 20px; }
+body.touch #settings .panel { width: min(460px, 94vw); max-height: min(88dvh, 760px); padding: 22px 18px; gap: 14px; }
+body.touch #settings .row { flex-wrap: wrap; gap: 8px 12px; }
+body.touch #settings .row > span:first-child { width: 100%; font-size: 12.5px; }
+body.touch #settings .row input[type=range] { flex: 1 1 auto; }
+body.touch #settings .seg { flex-wrap: wrap; }
+body.touch #settings .seg button { flex: 1 1 auto; padding: 7px 10px; }
+body.touch #settings .swatches { flex-wrap: wrap; }
 body.touch #end h1 { font-size: 30px; letter-spacing: 6px; }
 body.touch #end .stat-line { gap: 16px; flex-wrap: wrap; justify-content: center; }
 body.touch #end .stat .v { font-size: 24px; }
