@@ -13,6 +13,7 @@ class Input {
     this.rightEdge = false
     this.wheel = 0
     this.locked = false
+    this.touch = false
     this.listeners = []
   }
 
@@ -33,21 +34,53 @@ class Input {
       this.up[e.code] = true
     })
     window.addEventListener('mousemove', (e) => {
+      if (this.touch) return
       if (!this.locked) return
       if (!document.hasFocus()) return   // 失焦时丢弃，防异常巨量增量
       this.lookDx += e.movementX
       this.lookDy += e.movementY
     })
     el.addEventListener('mousedown', (e) => {
+      if (this.touch) return
       if (e.button === 0) { this.mouse.left = true; this.leftEdge = true }
       if (e.button === 2) { this.mouse.right = true; this.rightEdge = true }
     })
     window.addEventListener('mouseup', (e) => {
+      if (this.touch) return
       if (e.button === 0) this.mouse.left = false
       if (e.button === 2) this.mouse.right = false
     })
     window.addEventListener('wheel', (e) => { this.wheel += Math.sign(e.deltaY) }, { passive: true })
     el.addEventListener('contextmenu', (e) => e.preventDefault())
+  }
+
+  /** 触屏设备：不依赖 Pointer Lock，直接启用视角消费与按钮输入 */
+  enableTouch() {
+    this.touch = true
+    this.locked = true
+    this.lockChangedAt = 0
+  }
+
+  setLook(dx, dy) {
+    this.lookDx += dx
+    this.lookDy += dy
+  }
+
+  setKey(code, v) {
+    this.keys[code] = v
+    this.held[code] = v
+  }
+
+  /** 模拟一次短按（换弹等按键状态机只需要保持 true 若干毫秒） */
+  pressKey(code, ms = 90) {
+    this.keys[code] = true
+    clearTimeout(this._pressT?.[code])
+    setTimeout(() => { this.keys[code] = false }, ms)
+  }
+
+  /** 模拟本帧按下边沿（切枪 / 小地图切换等） */
+  edge(code) {
+    this.down[code] = true
   }
 
   // 指针锁定状态变化（由 main.js 注册到 game）

@@ -10,6 +10,7 @@ import { updateEffects, updateFountain } from './effects.js'
 import { ui } from './ui.js'
 import { game } from './game.js'
 import { applyLanguage } from './i18n.js'
+import { touch } from './touch.js'
 
 loadSettings()
 applyLanguage()
@@ -31,6 +32,11 @@ ui.applySettings = () => {
 }
 ui.applySettings()
 game.init({ player, bots, ui })
+touch.init({ game, player })
+
+const lockPointer = () => {
+  if (!touch.enabled && canvas.requestPointerLock) canvas.requestPointerLock()
+}
 
 /* ---------- 按钮动作 ---------- */
 ui.onStart = () => {
@@ -40,7 +46,7 @@ ui.onStart = () => {
   setTimeout(() => {
     ui.fade(false)
     game.startMatch()
-    canvas.requestPointerLock()
+    lockPointer()
   }, 420)
 }
 
@@ -51,7 +57,7 @@ ui.onTraining = () => {
   setTimeout(() => {
     ui.fade(false)
     game.startTraining()
-    canvas.requestPointerLock()
+    lockPointer()
   }, 300)
 }
 
@@ -59,7 +65,7 @@ ui.onResume = () => {
   ui.fade(true)
   setTimeout(() => {
     ui.fade(false)
-    canvas.requestPointerLock()
+    lockPointer()
   }, 240)
 }
 
@@ -73,12 +79,13 @@ ui.onRematch = () => {
   setTimeout(() => {
     ui.fade(false)
     game.startMatch()
-    canvas.requestPointerLock()
+    lockPointer()
   }, 420)
 }
 
 /* ---------- 指针锁定 / 暂停 ---------- */
 document.addEventListener('pointerlockchange', () => {
+  if (touch.enabled) return
   const locked = document.pointerLockElement === canvas
   input.setLocked(locked)
   if (!locked && (game.state === 'play' || game.state === 'countdown' || game.state === 'train')) {
@@ -90,6 +97,7 @@ document.addEventListener('pointerlockchange', () => {
 
 // 战斗中意外丢失锁定时，点击画面即可恢复
 canvas.addEventListener('click', () => {
+  if (touch.enabled) return
   if ((game.state === 'play' || game.state === 'train') && !document.pointerLockElement) {
     canvas.requestPointerLock()
   }
@@ -159,10 +167,11 @@ function loop(now) {
     updateWorld(dt, time)
   }
   ui.update({ player, bots, game }, dt, time)
+  touch.update()
   updateShadow(player.pos.x, player.pos.z)
   render(time)
   input.endFrame()
 }
 requestAnimationFrame(loop)
 
-window.__nexus = { game, player, bots, settings, scene, camera, renderer, world }
+window.__nexus = { game, player, bots, settings, scene, camera, renderer, world, input, touch }
