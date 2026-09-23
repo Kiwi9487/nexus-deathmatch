@@ -75,6 +75,16 @@ src/
 └── world/         # mapa, colisiones y navegación
 ```
 
+## Licencia
+
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+Este proyecto está bajo la licencia **Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)**.
+
+© 2026 Wenzhe Qiu · IES Miraflores de los Ángeles
+
+El texto completo de la licencia está en el archivo [LICENSE](LICENSE).
+
 ---
 
 ## English
@@ -84,3 +94,5 @@ src/
 Features include a 3–7 bot deathmatch, a training range, four weapons (M4A1, Desert Eagle, knife, sniper), tactical movement, AI bots with pathfinding, procedural WebAudio sound, and three languages (Spanish by default, Chinese, and English).
 
 Run it with `npm install` and `npm run dev`, then open `http://localhost:5173/`.
+
+Licensed under **CC BY-NC-SA 4.0** — see [LICENSE](LICENSE).
